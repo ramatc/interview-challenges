@@ -14,19 +14,23 @@ function App() {
   const [isLoading, toggleLoading] = useState<boolean>(true);
 
   function handleToggle(id: Item["id"]) {
-    // Should implement
+    setItems(items.map((item) => (item.id === id ? {...item, completed: !item.completed} : item)));
   }
 
   function handleAdd(event: React.ChangeEvent<Form>) {
     event.preventDefault();
 
-    setItems((items) =>
-      items.concat({
-        id: +new Date(),
-        completed: false,
-        text: event.target.text.value,
-      }),
-    );
+    const inputValue = event.target.text.value;
+
+    if (inputValue !== "") {
+      setItems((items) =>
+        items.concat({
+          id: +new Date(),
+          text: inputValue,
+          completed: false,
+        }),
+      );
+    }
 
     event.target.text.value = "";
   }
